@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070913" />
+      <stop offset="50%" stop-color="#0b112c" />
+      <stop offset="100%" stop-color="#050714" />
+    </linearGradient>
+
+    <linearGradient id="primaryTextGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="40%" stop-color="#818cf8" />
+      <stop offset="80%" stop-color="#c084fc" />
+      <stop offset="100%" stop-color="#f472b6" />
+    </linearGradient>
+
+    <linearGradient id="accentCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(56, 189, 248, 0.6)" />
+      <stop offset="50%" stop-color="rgba(192, 132, 252, 0.3)" />
+      <stop offset="100%" stop-color="rgba(56, 189, 248, 0.1)" />
+    </linearGradient>
+
+    <!-- Glowing Orbs Filters -->
+    <filter id="glowCyan" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="70" result="blur" />
+    </filter>
+    <filter id="glowPurple" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="85" result="blur" />
+    </filter>
+    <filter id="hudNeon" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+      <circle cx="40" cy="40" r="1" fill="rgba(56, 189, 248, 0.25)" />
+    </pattern>
+
+    <style>
+      .bg-radar {
+        transform-origin: 980px 140px;
+        animation: radarSweep 12s linear infinite;
+      }
+      .hud-orb-1 {
+        animation: floatOrb1 10s ease-in-out infinite alternate;
+      }
+      .hud-orb-2 {
+        animation: floatOrb2 14s ease-in-out infinite alternate;
+      }
+      .ping-ring {
+        transform-origin: 980px 140px;
+        animation: ringPulse 4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+      }
+      .data-flow {
+        stroke-dasharray: 8 16;
+        animation: flowDash 3s linear infinite;
+      }
+      .hud-scanline {
+        animation: scanlineMove 6s linear infinite;
+      }
+
+      @keyframes radarSweep {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes ringPulse {
+        0% { r: 10px; opacity: 0.9; }
+        100% { r: 120px; opacity: 0; }
+      }
+      @keyframes floatOrb1 {
+        0% { transform: translate(0px, 0px); }
+        100% { transform: translate(80px, 40px); }
+      }
+      @keyframes floatOrb2 {
+        0% { transform: translate(0px, 0px); }
+        100% { transform: translate(-60px, -30px); }
+      }
+      @keyframes flowDash {
+        to { stroke-dashoffset: -48; }
+      }
+      @keyframes scanlineMove {
+        0% { transform: translateY(0); opacity: 0.15; }
+        50% { opacity: 0.35; }
+        100% { transform: translateY(420px); opacity: 0.15; }
+      }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)" />
+
+  <!-- Animated Glowing Ambience (Behind everything) -->
+  <circle cx="200" cy="80" r="160" fill="#38bdf8" opacity="0.18" filter="url(#glowCyan)" class="hud-orb-1" />
+  <circle cx="980" cy="180" r="220" fill="#a855f7" opacity="0.22" filter="url(#glowPurple)" class="hud-orb-2" />
+  <circle cx="600" cy="380" r="140" fill="#06b6d4" opacity="0.12" filter="url(#glowCyan)" />
+
+  <!-- Grid Overlay -->
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Dynamic HUD Graphic Elements (Right side & decorative backdrop) -->
+  <g opacity="0.8">
+    <!-- Concentric Target HUD Radar -->
+    <circle cx="980" cy="140" r="110" fill="none" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1.5" stroke-dasharray="4 4" />
+    <circle cx="980" cy="140" r="80" fill="none" stroke="rgba(192, 132, 252, 0.3)" stroke-width="1.5" />
+    <circle cx="980" cy="140" r="45" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1" />
+    <circle cx="980" cy="140" r="5" fill="#38bdf8" />
+    
+    <!-- Radar Pulse Ring -->
+    <circle cx="980" cy="140" r="10" fill="none" stroke="#38bdf8" stroke-width="2" class="ping-ring" />
+    
+    <!-- Rotating Radar Beam -->
+    <g class="bg-radar">
+      <line x1="980" y1="140" x2="1080" y2="140" stroke="url(#accentCyan)" stroke-width="2" filter="url(#hudNeon)" />
+      <path d="M 980 140 L 1070 110 A 110 110 0 0 1 1080 140 Z" fill="rgba(56, 189, 248, 0.12)" />
+    </g>
+
+    <!-- HUD Crosshairs & Markers -->
+    <line x1="840" y1="140" x2="860" y2="140" stroke="#38bdf8" stroke-width="2" />
+    <line x1="1100" y1="140" x2="1120" y2="140" stroke="#38bdf8" stroke-width="2" />
+    <line x1="980" y1="20" x2="980" y2="40" stroke="#38bdf8" stroke-width="2" />
+    <line x1="980" y1="240" x2="980" y2="260" stroke="#38bdf8" stroke-width="2" />
+
+    <!-- Animated Circuit Flow Lines -->
+    <path d="M 750 340 L 850 340 L 910 280 L 1050 280 L 1100 230" fill="none" stroke="#38bdf8" stroke-width="1.5" class="data-flow" opacity="0.6" />
+    <circle cx="750" cy="340" r="4" fill="#38bdf8" />
+    <circle cx="1100" cy="230" r="4" fill="#a855f7" />
+    
+    <!-- Secondary Floating HUD Cards in Background (Semi-transparent) -->
+    <rect x="880" y="270" width="220" height="90" rx="10" fill="rgba(15, 23, 42, 0.65)" stroke="url(#borderGrad)" stroke-width="1.5" />
+    <text x="900" y="296" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5">LIVE AGENT TELEMETRY</text>
+    <rect x="900" y="310" width="130" height="6" rx="3" fill="rgba(56, 189, 248, 0.2)" />
+    <rect x="900" y="310" width="95" height="6" rx="3" fill="#38bdf8" />
+    <text x="900" y="340" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12">Protocol: AG-UI • Tool Calls: Active</text>
+  </g>
+
+  <!-- Scanning Line Effect -->
+  <line x1="0" y1="0" x2="1200" y2="0" stroke="rgba(56, 189, 248, 0.3)" stroke-width="2" class="hud-scanline" />
+
+  <!-- FOREGROUND CONTENT: Header, Titles, Pills, Badges -->
+  <g transform="translate(80, 0)">
+    <!-- Top System Pill / Category Header -->
+    <g transform="translate(0, 52)">
+      <rect x="0" y="0" width="310" height="32" rx="16" fill="rgba(30, 41, 59, 0.85)" stroke="#38bdf8" stroke-width="1.2" />
+      <circle cx="16" cy="16" r="5" fill="#10b981">
+        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
+      </circle>
+      <text x="32" y="20.5" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" letter-spacing="1.2">CURATED ECOSYSTEM INDEX 2026</text>
+    </g>
+
+    <!-- Main Title -->
+    <text x="0" y="140" fill="url(#primaryTextGrad)" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="44" font-weight="800" letter-spacing="-0.5" filter="url(#hudNeon)">
+      AI Agent Interfaces &amp; HUD UI
+    </text>
+
+    <!-- Subtitle (Always crisp & in high contrast foreground) -->
+    <text x="0" y="185" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="21" font-weight="600">
+      The Heads-Up Display &amp; Generative UI Frontier for Autonomous AI
+    </text>
+
+    <!-- Descriptive Tagline -->
+    <text x="0" y="218" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="400">
+      Real-time Agent-to-UI Protocols • Floating Desktop HUD Overlays • Human-in-the-Loop Controls • Generative UIs
+    </text>
+
+    <!-- Interactive / Feature Pills in Foreground -->
+    <g transform="translate(0, 258)">
+      <!-- Pill 1: Generative UI -->
+      <g transform="translate(0, 0)">
+        <rect width="150" height="36" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2" />
+        <text x="75" y="22.5" text-anchor="middle" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600">✨ Generative UI</text>
+      </g>
+
+      <!-- Pill 2: Agent HUD Overlays -->
+      <g transform="translate(162, 0)">
+        <rect width="180" height="36" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(129, 140, 248, 0.4)" stroke-width="1.2" />
+        <text x="90" y="22.5" text-anchor="middle" fill="#818cf8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600">🎯 Heads-Up Display</text>
+      </g>
+
+      <!-- Pill 3: AG-UI Protocol -->
+      <g transform="translate(354, 0)">
+        <rect width="165" height="36" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(192, 132, 252, 0.4)" stroke-width="1.2" />
+        <text x="82.5" y="22.5" text-anchor="middle" fill="#c084fc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600">⚡ AG-UI Protocol</text>
+      </g>
+
+      <!-- Pill 4: Human-in-the-Loop -->
+      <g transform="translate(531, 0)">
+        <rect width="175" height="36" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(244, 114, 182, 0.4)" stroke-width="1.2" />
+        <text x="87.5" y="22.5" text-anchor="middle" fill="#f472b6" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600">🛡️ Human-in-the-Loop</text>
+      </g>
+    </g>
+
+    <!-- Bottom Stat & Highlight Badges -->
+    <g transform="translate(0, 322)">
+      <text x="0" y="25" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500">
+        Curating Category Leaders: <tspan fill="#e2e8f0" font-weight="600">AutoGPT • Dify • Open WebUI • CopilotKit • LibreChat • Vercel v0 • OpenAI</tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- Modern Corner HUD Border Accents -->
+  <path d="M 20 50 L 20 20 L 50 20" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+  <path d="M 1180 50 L 1180 20 L 1150 20" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+  <path d="M 20 370 L 20 400 L 50 400" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+  <path d="M 1180 370 L 1180 400 L 1150 400" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+</svg>
